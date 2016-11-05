@@ -2,7 +2,8 @@ describe('Routes Books', function () {
   var Books = app.datasource.models.Books
   var defaultBook = {
     id: 1,
-    name: 'Default Book'
+    name: 'Default Book',
+    description: 'Default Description'
   }
 
   beforeEach(function (done) {
@@ -21,6 +22,7 @@ describe('Routes Books', function () {
       var booksList = Joi.array().items(Joi.object().keys({
         id: Joi.number(),
         name: Joi.string(),
+        description: Joi.string(),
         created_at: Joi.date().iso(),
         updated_at: Joi.date().iso()
       }))
@@ -39,6 +41,7 @@ describe('Routes Books', function () {
       var book = Joi.object().keys({
         id: Joi.number(),
         name: Joi.string(),
+        description: Joi.string(),
         created_at: Joi.date().iso(),
         updated_at: Joi.date().iso()
       })
@@ -57,13 +60,15 @@ describe('Routes Books', function () {
       var book = Joi.object().keys({
         id: Joi.number(),
         name: Joi.string(),
+        description: Joi.string(),
         created_at: Joi.date().iso(),
         updated_at: Joi.date().iso()
       })
 
       var newBook = {
         id: 2,
-        name: 'New Book'
+        name: 'New Book',
+        description: 'New Description'
       }
 
       request
@@ -82,7 +87,8 @@ describe('Routes Books', function () {
 
       var updatedBook = {
         id: 1,
-        name: 'Updated Book'
+        name: 'Updated Book',
+        description: 'Updated Book'
       }
 
       request

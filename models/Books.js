@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataType) {
-  var Books = sequelize.define('Books', {
+  return sequelize.define('Books', {
     id: {
       type: DataType.INTEGER,
       primaryKey: true,
@@ -11,7 +11,13 @@ module.exports = function (sequelize, DataType) {
       validate: {
         notEmpty: true
       }
+    },
+    description: {
+      type: DataType.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
     }
   })
-  return Books
 }
