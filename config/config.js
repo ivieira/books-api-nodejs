@@ -1,5 +1,5 @@
 module.exports = function () {
-  var config = {
+  return {
     database: 'books',
     username: '',
     password: '',
@@ -9,8 +9,8 @@ module.exports = function () {
       define: {
         underscored: true
       }
-    }
+    },
+    jwtSecret: 'Sec3t',
+    jwtSession: {session: false}
   }
-
-  return config
 }
