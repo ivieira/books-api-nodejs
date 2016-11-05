@@ -86,7 +86,7 @@ describe('Routes Books', function () {
       request
       .delete('/books/1')
       .end(function (err, res) {
-        expect(res.statusCode).to.be.eql(204)
+        expect(res.statusCode).to.be.eql(HttpStatus.NO_CONTENT)
         done(err)
       })
     })

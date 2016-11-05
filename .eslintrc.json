@@ -10,6 +10,7 @@
     "joi": true,
     "joiAssert": true,
     "request": true,
-    "beforeEach": true
+    "beforeEach": true,
+    "HttpStatus": true
   }
 }

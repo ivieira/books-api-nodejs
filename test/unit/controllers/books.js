@@ -19,7 +19,7 @@ describe('Controllers: Books', function () {
       var booksController = new BooksController(Books)
       return booksController.getAll()
         .then(function (response) {
-          expect(response.statusCode).to.be.eql(200)
+          expect(response.statusCode).to.be.eql(HttpStatus.OK)
           expect(response.data).to.be.eql(expectedResponse)
         })
     })
@@ -43,7 +43,7 @@ describe('Controllers: Books', function () {
       var booksController = new BooksController(Books)
       return booksController.getById({id: 1})
         .then(function (response) {
-          expect(response.statusCode).to.be.eql(200)
+          expect(response.statusCode).to.be.eql(HttpStatus.OK)
           expect(response.data).to.be.eql(expectedResponse)
         })
     })
@@ -71,7 +71,7 @@ describe('Controllers: Books', function () {
       var booksController = new BooksController(Books)
       return booksController.create(requestBody)
         .then(function (response) {
-          expect(response.statusCode).to.be.eql(201)
+          expect(response.statusCode).to.be.eql(HttpStatus.CREATED)
           expect(response.data).to.be.eql(expectedResponse)
         })
     })
@@ -100,7 +100,7 @@ describe('Controllers: Books', function () {
       var booksController = new BooksController(Books)
       return booksController.update(requestBody, {id: 1})
         .then(function (response) {
-          expect(response.statusCode).to.be.eql(200)
+          expect(response.statusCode).to.be.eql(HttpStatus.OK)
           expect(response.data).to.be.eql(expectedResponse)
         })
     })
@@ -117,7 +117,7 @@ describe('Controllers: Books', function () {
       var booksController = new BooksController(Books)
       return booksController.delete({id: 1})
         .then(function (response) {
-          expect(response.statusCode).to.be.eql(204)
+          expect(response.statusCode).to.be.eql(HttpStatus.NO_CONTENT)
         })
     })
   })

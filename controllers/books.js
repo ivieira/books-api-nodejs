@@ -1,11 +1,13 @@
-function defaultResponse (data, statusCode) {
+var HttpStatus = require('http-status')
+
+function defaultResponse (data, statusCode = HttpStatus.OK) {
   return {
     data: data,
     statusCode: statusCode
   }
 }
 
-function errorResponse (message, statusCode) {
+function errorResponse (message, statusCode = HttpStatus.BAD_REQUEST) {
   return defaultResponse({error: message}, statusCode)
 }
 
@@ -16,50 +18,50 @@ function BooksController (Books) {
 BooksController.prototype.getAll = function () {
   return this.Books.findAll({})
     .then(function (result) {
-      return defaultResponse(result, 200)
+      return defaultResponse(result)
     })
     .catch(function (error) {
-      return errorResponse(error.message, 400)
+      return errorResponse(error.message)
     })
 }
 
 BooksController.prototype.getById = function (params) {
   return this.Books.findOne({where: params})
     .then(function (result) {
-      return defaultResponse(result, 200)
+      return defaultResponse(result)
     })
     .catch(function (error) {
-      return errorResponse(error.message, 400)
+      return errorResponse(error.message)
     })
 }
 
 BooksController.prototype.create = function (data) {
   return this.Books.create(data)
     .then(function (result) {
-      return defaultResponse(result, 201)
+      return defaultResponse(result, HttpStatus.CREATED)
     })
     .catch(function (error) {
-      return errorResponse(error.message, 422)
+      return errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY)
     })
 }
 
 BooksController.prototype.update = function (data, params) {
   return this.Books.update(data, {where: params})
     .then(function (result) {
-      return defaultResponse(result, 200)
+      return defaultResponse(result)
     })
     .catch(function (error) {
-      return errorResponse(error.message, 422)
+      return errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY)
     })
 }
 
 BooksController.prototype.delete = function (params) {
   return this.Books.destroy({where: params})
     .then(function (result) {
-      return defaultResponse(result, 204)
+      return defaultResponse(result, HttpStatus.NO_CONTENT)
     })
     .catch(function (error) {
-      return errorResponse(error.message, 422)
+      return errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY)
     })
 }
 
