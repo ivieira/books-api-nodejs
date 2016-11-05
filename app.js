@@ -3,6 +3,7 @@ var bodyParsre = require('body-parser')
 var config = require('./config/config')()
 var datasource = require('./config/datasource')
 var booksRouter = require('./routes/books')
+var usersRouter = require('./routes/users')
 
 var app = express()
 
@@ -12,8 +13,8 @@ app.use(bodyParsre.json())
 app.config = config
 app.datasource = datasource(app)
 
-var Books = app.datasource.models.Books
-booksRouter(app, Books)
+booksRouter(app)
+usersRouter(app)
 
 module.exports = function () {
   return app

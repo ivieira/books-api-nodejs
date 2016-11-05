@@ -110,6 +110,23 @@
       "resolved": "https://registry.npmjs.org/balanced-match/-/balanced-match-0.4.2.tgz",
       "dev": true
     },
+    "bcrypt": {
+      "version": "0.8.7",
+      "from": "bcrypt@latest",
+      "resolved": "https://registry.npmjs.org/bcrypt/-/bcrypt-0.8.7.tgz",
+      "dependencies": {
+        "nan": {
+          "version": "2.3.5",
+          "from": "nan@2.3.5",
+          "resolved": "https://registry.npmjs.org/nan/-/nan-2.3.5.tgz"
+        }
+      }
+    },
+    "bindings": {
+      "version": "1.2.1",
+      "from": "bindings@1.2.1",
+      "resolved": "https://registry.npmjs.org/bindings/-/bindings-1.2.1.tgz"
+    },
     "bluebird": {
       "version": "3.4.6",
       "from": "bluebird@>=3.3.4 <4.0.0",
