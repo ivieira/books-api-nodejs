@@ -1,0 +1,15 @@
+{
+  "extends": "standard",
+  "globals": {
+    "describe": true,
+    "it": true,
+    "td": true,
+    "expect": true,
+    "app": true,
+    "Joi": true,
+    "joi": true,
+    "joiAssert": true,
+    "request": true,
+    "beforeEach": true
+  }
+}

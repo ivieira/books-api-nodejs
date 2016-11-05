@@ -1,0 +1,38 @@
+{
+  "name": "books-api",
+  "version": "1.0.0",
+  "description": "Simple books API with all tests inclued",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start:dev": "node index.js",
+    "pretest": "echo 'about to run the test...' && npm run lint",
+    "posttest": "echo 'the test has been run!'",
+    "test": "npm run test-unit && npm run test-integration && npm run test-contract",
+    "test-unit": "NODE_ENV=test ./node_modules/.bin/mocha --opts test/unit/mocha.opts test/unit/**/*.js",
+    "test-integration": "NODE_ENV=test ./node_modules/.bin/mocha --opts test/integration/mocha.opts test/integration/*.js",
+    "test-contract": "NODE_ENV=test ./node_modules/.bin/mocha --opts test/contracts/mocha.opts test/contracts/*.js",
+    "lint": "./node_modules/.bin/eslint .",
+    "lint:fix": "./node_modules/.bin/eslint . --fix"
+  },
+  "author": "Igor Vieira",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "sequelize": "https://registry.npmjs.org/sequelize/-/sequelize-3.24.6.tgz",
+    "sqlite3": "https://registry.npmjs.org/sqlite3/-/sqlite3-3.1.8.tgz"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^3.9.1",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-promise": "^3.3.0",
+    "eslint-plugin-standard": "^2.0.1",
+    "joi": "^9.2.0",
+    "joi-assert": "0.0.3",
+    "mocha": "^3.1.2",
+    "supertest": "^2.0.1",
+    "testdouble": "^1.9.0"
+  }
+}
