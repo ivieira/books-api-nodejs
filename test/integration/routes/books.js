@@ -1,5 +1,9 @@
+var jwt = require('jwt-simple')
+
 describe('Routes Books', function () {
   var Books = app.datasource.models.Books
+  var Users = app.datasource.models.Users
+  var jwtSecret = app.config.jwtSecret
 
   var defaultBook = {
     id: 1,
@@ -7,13 +11,27 @@ describe('Routes Books', function () {
     description: 'Default Description'
   }
 
+  var token = ''
+
   beforeEach(function (done) {
-    Books
+    Users
     .destroy({where: {}})
     .then(function () {
-      Books.create(defaultBook)
-      .then(function () {
-        done()
+      Users.create({
+        name: 'John',
+        email: 'john@email.com',
+        password: '12345'
+      })
+      .then(function (user) {
+        Books
+        .destroy({where: {}})
+        .then(function () {
+          Books.create(defaultBook)
+          .then(function () {
+            token = jwt.encode({id: user.id}, jwtSecret)
+            done()
+          })
+        })
       })
     })
   })
@@ -22,6 +40,7 @@ describe('Routes Books', function () {
     it('should return a list of books', function (done) {
       request
       .get('/books')
+      .set('Authorization', `JWT ${token}`)
       .end(function (err, res) {
         expect(res.body[0].id).to.be.eql(defaultBook.id)
         expect(res.body[0].name).to.be.eql(defaultBook.name)
@@ -35,6 +54,7 @@ describe('Routes Books', function () {
     it('should return a book', function (done) {
       request
       .get('/books/1')
+      .set('Authorization', `JWT ${token}`)
       .end(function (err, res) {
         expect(res.body.id).to.be.eql(defaultBook.id)
         expect(res.body.name).to.be.eql(defaultBook.name)
@@ -54,6 +74,7 @@ describe('Routes Books', function () {
 
       request
       .post('/books')
+      .set('Authorization', `JWT ${token}`)
       .send(newBook)
       .end(function (err, res) {
         expect(res.body.id).to.be.eql(newBook.id)
@@ -73,6 +94,7 @@ describe('Routes Books', function () {
 
       request
       .put('/books/1')
+      .set('Authorization', `JWT ${token}`)
       .send(updatedBook)
       .end(function (err, res) {
         expect(res.body).to.be.eql([1])
@@ -85,6 +107,7 @@ describe('Routes Books', function () {
     it('should delet a book', function (done) {
       request
       .delete('/books/1')
+      .set('Authorization', `JWT ${token}`)
       .end(function (err, res) {
         expect(res.statusCode).to.be.eql(HttpStatus.NO_CONTENT)
         done(err)

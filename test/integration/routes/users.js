@@ -1,5 +1,9 @@
+var jwt = require('jwt-simple')
+
 describe('Routes Users', function () {
   var Users = app.datasource.models.Users
+  var jwtSecret = app.config.jwtSecret
+
   var defaultUser = {
     id: 1,
     name: 'Default User',
@@ -7,13 +11,23 @@ describe('Routes Users', function () {
     password: 'default'
   }
 
+  var token = ''
+
   beforeEach(function (done) {
     Users
     .destroy({where: {}})
     .then(function () {
-      Users.create(defaultUser)
-      .then(function () {
-        done()
+      Users.create({
+        name: 'John',
+        email: 'john@email.com',
+        password: '12345'
+      })
+      .then(function (user) {
+        Users.create(defaultUser)
+        .then(function () {
+          token = jwt.encode({id: user.id}, jwtSecret)
+          done()
+        })
       })
     })
   })
@@ -22,6 +36,7 @@ describe('Routes Users', function () {
     it('should return a list of users', function (done) {
       request
       .get('/users')
+      .set('Authorization', `JWT ${token}`)
       .end(function (err, res) {
         expect(res.body[0].id).to.be.eql(defaultUser.id)
         expect(res.body[0].name).to.be.eql(defaultUser.name)
@@ -35,6 +50,7 @@ describe('Routes Users', function () {
     it('should return a user', function (done) {
       request
       .get('/users/1')
+      .set('Authorization', `JWT ${token}`)
       .end(function (err, res) {
         expect(res.body.id).to.be.eql(defaultUser.id)
         expect(res.body.name).to.be.eql(defaultUser.name)
@@ -55,6 +71,7 @@ describe('Routes Users', function () {
 
       request
       .post('/users')
+      .set('Authorization', `JWT ${token}`)
       .send(newUser)
       .end(function (err, res) {
         expect(res.body.id).to.be.eql(newUser.id)
@@ -75,6 +92,7 @@ describe('Routes Users', function () {
 
       request
       .put('/users/1')
+      .set('Authorization', `JWT ${token}`)
       .send(updatedUser)
       .end(function (err, res) {
         expect(res.body).to.be.eql([1])
@@ -87,6 +105,7 @@ describe('Routes Users', function () {
     it('should delet a user', function (done) {
       request
       .delete('/users/1')
+      .set('Authorization', `JWT ${token}`)
       .end(function (err, res) {
         expect(res.statusCode).to.be.eql(HttpStatus.NO_CONTENT)
         done(err)

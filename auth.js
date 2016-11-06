@@ -32,7 +32,7 @@ module.exports = function (app) {
       return passport.initialize()
     },
     authenticate: function () {
-      return passport.authenticate('jwt', app.config.jwtSecret)
+      return passport.authenticate('jwt', app.config.jwtSession)
     }
   }
 }

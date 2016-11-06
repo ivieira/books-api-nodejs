@@ -4,6 +4,7 @@ module.exports = function (app) {
   var booksController = new BooksController(app.datasource.models.Books)
 
   app.route('/books')
+    .all(app.auth.authenticate())
     .get(function (req, res) {
       booksController.getAll()
         .then(function (response) {
@@ -20,6 +21,7 @@ module.exports = function (app) {
     })
 
   app.route('/books/:id')
+    .all(app.auth.authenticate())
     .get(function (req, res) {
       booksController.getById(req.params)
         .then(function (response) {
@@ -27,17 +29,17 @@ module.exports = function (app) {
           res.json(response.data)
         })
     })
-  .put(function (req, res) {
-    booksController.update(req.body, req.params)
-      .then(function (response) {
-        res.status(response.statusCode)
-        res.json(response.data)
-      })
-  })
-  .delete(function (req, res) {
-    booksController.delete(req.params)
-    .then(function (response) {
-      res.sendStatus(response.statusCode)
+    .put(function (req, res) {
+      booksController.update(req.body, req.params)
+        .then(function (response) {
+          res.status(response.statusCode)
+          res.json(response.data)
+        })
     })
-  })
+    .delete(function (req, res) {
+      booksController.delete(req.params)
+      .then(function (response) {
+        res.sendStatus(response.statusCode)
+      })
+    })
 }
